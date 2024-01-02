@@ -1,0 +1,62 @@
+﻿@page "/InterpreterPattern_TP"
+<h3>InterpreterPattern_TP</h3>
+
+@code {
+    public string RomanNumber { get; set; }
+    int CurrentNumber = 0;
+    protected override void OnInitialized()
+    {
+
+        base.OnInitialized();
+
+    }
+    void ConvertNumber()
+    {
+        var expressions = new List<RomanExpression>
+        {
+            new RomanHunderedExpression(),
+             new RomanTenExpression(),
+            new RomanOneExpression()
+        };
+
+        var context = new RomanContext(CurrentNumber);
+        foreach (var expression in expressions)
+        {
+            expression.Interpret(context);
+        }
+        RomanNumber = context.Output;
+    }
+}
+
+<div style="display:flex;justify-content:center">
+    <div style="width:30%">
+        <div style="display:flex; border:dotted">
+            <div style="margin:20px">
+                <p> Arabic Number</p>
+            </div>
+            <div style="margin:20px">
+                <input type="number" @bind-value="CurrentNumber" />
+            </div>
+            <div style="margin:20px">
+                <button @onclick="ConvertNumber"> Convert </button>
+            </div>
+            
+
+        </div>
+        @if (!String.IsNullOrEmpty(RomanNumber))
+        {
+            
+        <div style="display:flex; border:dotted">
+            <div style="margin:20px">
+                <p> Roman Number</p>
+            </div>
+            <div style="margin:20px">
+                <p>@RomanNumber</p>
+            </div>
+
+        </div>
+        }
+
+    </div>
+
+</div>

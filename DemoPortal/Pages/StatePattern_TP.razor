@@ -1,0 +1,22 @@
+﻿@page "/StatePattern_TP"
+<h3>StatePattern_TP</h3>
+
+@code
+{
+    protected override Task OnInitializedAsync()
+    {
+        BankAccount bankAccount = new();
+        bankAccount.Deposit(100);
+        bankAccount.WithDraw(500);
+        bankAccount.WithDraw(20);
+
+        //Deposit Enough to Get Gold State
+        bankAccount.Deposit(3000);
+        // should be Gold By Now
+        bankAccount.Deposit(100);
+        bankAccount.Deposit(100);
+
+
+        return base.OnInitializedAsync();
+    }
+}

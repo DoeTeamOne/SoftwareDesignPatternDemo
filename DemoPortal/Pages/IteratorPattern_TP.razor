@@ -1,0 +1,39 @@
+﻿@page "/IteratorPattern_TP"
+<h3>IteratorPattern_TP</h3>
+
+@code {
+    PeopleCollaction people = new();
+    protected override Task OnInitializedAsync()
+    {
+
+        people.Add(new IteratorPattern.Implementation.Person("Dan Zel", "Spain"));
+        people.Add(new IteratorPattern.Implementation.Person("Beya Nilson", "Ethiopia"));
+        people.Add(new IteratorPattern.Implementation.Person("Bash Tommy", "Germany"));
+
+        // Create People Iterator in the collaction
+       //var PersonIterator = people.CreateIterator();
+
+        return base.OnInitializedAsync();
+    }
+
+}
+
+<div style="display:flex;justify-content:center">
+
+    <div>
+        <p>Perople Iterator Test</p>
+        @{
+            var PersonIterator = people.CreateIterator();
+            @for (IteratorPattern.Implementation.Person person = PersonIterator.First(); !PersonIterator.ISDone; person= PersonIterator.Next())
+            {
+                <div style="border:dotted">
+                <p>Name: @person.Name </p>
+                <p>Country : @person.Country</p>
+                </div>
+            }
+
+        }
+
+    </div>
+
+</div>

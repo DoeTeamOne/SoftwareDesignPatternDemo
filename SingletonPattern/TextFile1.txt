@@ -1,0 +1,22 @@
+﻿is A creational Pattern of GOF
+
+the intent of this pattern is to ensure that the class has only one instance  and provide globall access to it ss
+
+a greate good example is A logger 
+
+
+use cases 
+whene there must be exactly one instance of the class and it must be accessible to client  from a well knowen access point
+
+
+pattern Results
+
+- strict control over how and when client Access it 
+- it avoid polutiong the namespace with dlobal variables 
+-subclassing allows configuring the application with an instane of the class that you need at runtime
+- it violate single responsiblility principle  because objects not only control how thry are created but also manage thirer own lifecycle 
+
+nb .. this implementation might not be used in a modern programing since this is the IOC container take care of this 
+
+
+

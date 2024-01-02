@@ -1,0 +1,60 @@
+﻿@page "/StrategyPattern_TP"
+<h3>StrategyPattern_TP</h3>
+
+@code {
+    public string CSVExportResult { get; set; }
+    public string XMLExportResult { get; set; }
+    public string JsonExportResult { get; set; }
+    protected override Task OnInitializedAsync()
+    {
+
+        return base.OnInitializedAsync();
+    }
+
+    void ExportToCSV()
+    {
+        var exportService = new CSVExportService();
+        var order = new Order("DanSoft", 5, "VisualStudioLicense", exportService); // constrictor Injuction Of ExportService
+        CSVExportResult = order.Export();
+        StateHasChanged();
+    }
+    void ExportToXML()
+    {
+        var exportService = new XMLExportService();
+        var order = new Order("DanSoft", 22, "VisualStudioLicense", exportService); // constrictor Injuction Of ExportService
+        XMLExportResult = order.Export();
+        StateHasChanged();
+    }
+    void ExportToJSON()
+    {
+        var exportService = new JsonExportServices();
+        var order = new Order("DanSoft", 14, "VisualStudioLicense", exportService); // constrictor Injuction Of ExportService
+        JsonExportResult = order.Export();
+        StateHasChanged();
+    }
+}
+
+<div style="display:flex;justify-content:center">
+    <div style="margin:25px;border:dotted">
+        <button  @onclick="ExportToCSV"> ExportToCSV</button>
+        @if (!String.IsNullOrEmpty(CSVExportResult))
+        {
+            <p>@CSVExportResult</p>
+        }
+    </div>
+    <div style="margin:25px;border:dotted">
+        <button @onclick="ExportToXML"> ExportToXML</button>
+        @if (!String.IsNullOrEmpty(XMLExportResult))
+        {
+            <p>@XMLExportResult</p>
+        }
+    </div>
+    <div style="margin:25px;border:dotted">
+        <button @onclick="ExportToJSON"> ExportToJSON</button>
+        @if (!String.IsNullOrEmpty(JsonExportResult))
+        {
+            <p>@JsonExportResult</p>
+        }
+    </div>
+
+</div>

@@ -1,0 +1,42 @@
+﻿@page "/TemplatePattern_TP"
+<h3>TemplatePattern_TP</h3>
+
+@code {
+    ExchangeMailParser exchangeMailParser = new ExchangeMailParser();
+    EudoraMailParser eudoraMailParser = new EudoraMailParser();
+    ApacheMailParser apacheMailParser = new ApacheMailParser();
+    public string ExchangeInfoLog { get; set; }
+    public string Eudoraloginfo { get; set; }
+    public string Apacheloginfo { get; set; }
+    protected override Task OnInitializedAsync()
+    {
+        ExchangeInfoLog = exchangeMailParser.ParseMailBody("ddsds-5555d-d5s4d5-d4s5d4s");
+        Apacheloginfo = apacheMailParser.ParseMailBody("1115-452-jjk5-6k5-666hj-84855g");
+        Eudoraloginfo = eudoraMailParser.ParseMailBody("5555-45f5dg-45f4g-66g55g-445jl");
+        return base.OnInitializedAsync();
+    }
+
+}
+
+<div style="display:flex;justify-content:center">
+    <div style="display:flex">
+        <div style="border:dotted">
+            <p style="background-color:aqua"> Exchange Parser Result</p>
+            <p>@ExchangeInfoLog</p>
+
+        </div>
+        <div style="border:dotted">
+            <p style="background-color:aqua"> Apache Parser Result</p>
+            <p>@Apacheloginfo</p>
+
+        </div>
+        <div style="border:dotted">
+            <p style="background-color:aqua"> eudoraMailParser  Result</p>
+            <p>@Eudoraloginfo</p>
+
+        </div>
+
+    </div>
+
+
+</div>

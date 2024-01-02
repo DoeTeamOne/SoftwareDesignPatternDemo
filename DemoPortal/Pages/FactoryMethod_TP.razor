@@ -1,0 +1,57 @@
+﻿@page "/AbstructFactory_TP"
+@using DemoPortal.Abstruction
+@using DemoPortal.Implementation
+@inject IClientService clientservices
+
+@code {
+    List<Discount> discounts = null;
+    DiscontFactor _DiscontFactor = new DiscontFactor();
+    protected override Task OnInitializedAsync()
+    {
+        discounts = new List<Discount>();
+
+        return base.OnInitializedAsync();
+    }
+
+    private void LoadDiscount()
+    {
+        clientservices.SetClientData(_DiscontFactor.CountryISO2, _DiscontFactor.DiscountCode);
+        discounts = clientservices.GetAllDiscounts();
+        
+    }
+    public class DiscontFactor
+    {
+        public string CountryISO2 { get; set; }
+        public string DiscountCode { get; set; }
+    }
+}
+
+<div>
+    @if (discounts != null)
+    {
+        
+    
+    @foreach (var discount in discounts)
+    {
+        <p>Name : @discount.Name </p>
+        <p> Percentage : @discount.Percentage % </p>
+    }
+    <EditForm Model="discounts">
+        <InputSelect @bind-Value="_DiscontFactor.CountryISO2">
+                <option value="none">none</option>
+            <option value="ES">ES</option>
+            <option value="ET">ET</option>
+        </InputSelect>
+        <InputSelect @bind-Value="_DiscontFactor.DiscountCode" >
+                <option value="none">none</option>
+            <option value="PROMO12023">PROMO12023</option>
+            <option value="PROMO22023">PROMO22023</option>
+            
+        </InputSelect>
+    </EditForm>
+    <div style="padding :100px">
+        <button type="submit" onclick="@LoadDiscount"> GetDiscount</button>
+    </div>
+    }
+
+</div>

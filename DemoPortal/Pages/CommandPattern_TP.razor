@@ -1,0 +1,79 @@
+﻿@page "/CommandPattern_TP"
+<h3>CommandPattern_TP</h3>
+
+@code {
+    EmployeeVM employee = new EmployeeVM();
+    CommandPattern.Implementation.CommandManager command = new CommandPattern.Implementation.CommandManager();
+    CommandPattern.Helpers.IEmployeeManagerRepository repository = new CommandPattern.Helpers.EmployeeManagerRepository();
+    List<CommandPattern.Helpers.Manager> ManagersInfo = new List<CommandPattern.Helpers.Manager>();
+    int CurrentManagerId = 1;
+
+    protected override Task OnInitializedAsync()
+    {
+        ManagersInfo = repository.GetManagersData();
+        return base.OnInitializedAsync();
+    }
+
+    void AddEmployee()
+    {
+        if(employee == null)
+        {
+            return;
+        }
+
+        command.Invoke(new CommandPattern.Implementation.AddEmployeeToManagerList(repository, CurrentManagerId, new CommandPattern.Helpers.Employee(employee.Id, employee.Name)));
+        repository.WriteDataStore();
+        StateHasChanged();
+    }
+
+    void Undo()
+    {
+        command.Undo();
+        StateHasChanged();
+    }
+
+   
+
+
+    class EmployeeVM
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+    }
+
+}
+
+<div style="display:block;justify-content:center">
+    <div class="form-control">
+        <input type="number" @bind-value ="employee.Id" />
+        <input type="text" @bind-value = "employee.Name" />
+        <select @bind="CurrentManagerId">
+            
+            <option value="1">Dan</option>
+            <option value="2">Jhon</option>
+
+        </select>
+        <button @onclick="AddEmployee">Add Employee</button>
+        <button @onclick="Undo">Undo</button>
+    </div>
+    <div style="display:flex">
+        @foreach (var managersList in ManagersInfo)
+        {
+            <div style="display:block;width:30%;margin:20px">
+            <p>Manager : @managersList.Name</p>
+            <div style="display:block;border:groove">
+                @foreach (var emp in managersList.Employees)
+                {
+                    <div style="border:dotted">
+                        <p>Employee @emp.Id</p>
+                        <p>Name @emp.Name</p>
+                    </div>
+                }
+
+            </div>
+            </div>
+        }
+
+    </div>
+
+</div>

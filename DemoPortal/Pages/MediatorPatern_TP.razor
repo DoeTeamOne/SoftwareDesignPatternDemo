@@ -1,0 +1,51 @@
+﻿@page "/MediatorPatern_TP"
+<h3>MediatorPatern_TP</h3>
+
+@code {
+    TeamChatRoom chattoom = new TeamChatRoom();
+    Lawyer Dan;
+    Lawyer beya;
+    AccountManager Bob;
+    AccountManager jhon;
+
+    protected override Task OnInitializedAsync()
+    {
+        Dan = new Lawyer("Dan");
+        beya = new Lawyer("Beya");
+        Bob = new AccountManager("bob");
+        jhon = new AccountManager("Jhon");
+
+        chattoom.register(Dan);
+        chattoom.register(beya);
+        chattoom.register(Bob);
+        chattoom.register(jhon);
+        Dan.Send("Hello Team");
+        beya.Send("hi Dudew");
+
+        Console.WriteLine("Specific Person Chat Test");
+
+        Dan.Send("Beya", "what the hell?");
+
+        Console.WriteLine("Specific group in the chat room Test");
+
+        Dan.Send<AccountManager>("Hi All Account Managers");
+
+        return base.OnInitializedAsync();
+    }
+}
+
+<div style="display:flex"> 
+    <p>this Implementation needs rework on UI side . but the general implementation is on the Console  please refer console windo for testing </p>
+    <div style="width:15%; border:dotted;margin:20px">
+        <p>Dan</p>
+        <p></p>
+    </div>
+    <div style="width:15%; border:dotted;margin:20px">
+    </div>
+    <div style="width:15%; border:dotted;margin:20px">
+    </div>
+    <div style="width:15%; border:dotted;margin:20px">
+    </div>
+    <div style="width:15%; border:dotted;margin:20px">
+    </div>
+</div>

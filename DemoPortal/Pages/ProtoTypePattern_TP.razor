@@ -1,0 +1,101 @@
+﻿@page "/ProtoTypePattern_TP"
+<h3>ProtoTypePattern Test</h3>
+
+@code {
+    ProtoTypePattern.Impelementation.Manager managerPrototype;
+    ProtoTypePattern.Impelementation.Manager ClonedManager;
+
+    ProtoTypePattern.Impelementation.Employee EmployeeProtoType;
+    ProtoTypePattern.Impelementation.Employee ClonedEmployee;
+
+
+    protected override Task OnInitializedAsync()
+    {
+        managerPrototype = new ProtoTypePattern.Impelementation.Manager("Karsten");
+        EmployeeProtoType = new ProtoTypePattern.Impelementation.Employee("Pato", managerPrototype);
+
+        return base.OnInitializedAsync();
+    }
+
+
+    void CloneManager()
+    {
+        ClonedManager = (ProtoTypePattern.Impelementation.Manager)managerPrototype.Clone(true);
+        StateHasChanged();
+    }
+
+    void CloneEmployee()
+    {
+        managerPrototype.Name = "Dani";
+        ClonedEmployee = (ProtoTypePattern.Impelementation.Employee)EmployeeProtoType.Clone(true);
+        StateHasChanged();
+    }
+
+
+}
+
+<div style="display:flex">
+<div style="border:dashed">
+    @if(managerPrototype != null)
+    {
+       <div>
+           <p>Manager Proto Type</p>
+           <div>
+               <p>Name  : @managerPrototype.Name</p>
+            
+            </div>
+           <div>
+                    <button @onclick="CloneManager">Clone</button>
+           </div>
+       </div> 
+    }
+    
+</div>
+
+
+    @if(ClonedManager != null)
+    {
+    <div style="border:groove">
+
+        <p>Cloned Managaer Object </p>
+        <div>
+            <p>Cloned Manager Name : @ClonedManager.Name</p>
+        </div>
+    </div>
+
+    }
+</div>
+<div style="display:flex">
+    <div style="border:dashed">
+        @if (EmployeeProtoType != null)
+        {
+            <div>
+                <p>Employee Proto Type</p>
+                <div>
+                    <p>Name  : @EmployeeProtoType.Name</p>
+                    <p>ManagerName : @EmployeeProtoType.Manager.Name</p>
+
+                </div>
+                <div>
+                    <button @onclick="CloneEmployee">Clone</button>
+                </div>
+            </div>
+        }
+
+    </div>
+
+
+    @if (ClonedEmployee != null)
+    {
+        <div style="border:groove">
+
+            <p>Cloned Employee Object </p>
+            <div>
+                <p>Cloned Employe Name : @ClonedEmployee.Name</p>
+                <p>ManagerName  : @ClonedEmployee.Manager.Name</p>
+            </div>
+        </div>
+
+    }
+</div>
+

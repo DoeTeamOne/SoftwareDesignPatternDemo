@@ -1,0 +1,68 @@
+﻿@page "/BuilderPattern_TP"
+@using BuilderPattern.Implementation;
+@inject IGarageClientService clientservice
+@code {
+    public string CarDetail{ get; set; }
+    CarModel carModel = new CarModel();
+    protected override Task OnInitializedAsync()
+    {
+
+        return base.OnInitializedAsync();
+    }
+
+    void Build()
+    {
+        switch (carModel.Type)
+        {
+            case "Mini":
+                var minibuilder = new MiniBuilder();
+                clientservice.ConstructCar(minibuilder);
+                CarDetail = clientservice.GetCarInfo();
+                StateHasChanged();
+                break;
+            case "BMW":
+                var BMWBuilder = new BMWBuilder();
+                clientservice.ConstructCar(BMWBuilder);
+                CarDetail = clientservice.GetCarInfo();
+                StateHasChanged();
+                break;
+        }
+
+    }
+
+    class CarModel
+    {
+       public string  Name  { get; set; } 
+       public string Type { get; set; }
+    }
+
+}
+
+
+<div class="text-center">
+    <EditForm Model="@carModel" OnValidSubmit="@Build">
+        <InputSelect @bind-Value="carModel.Type">
+        <option value=""></option>
+        <option value="Mini">Mini</option>
+        <option value="BMW">BMW</option>
+
+    </InputSelect>
+
+    <button type="submit">Submit</button>
+</EditForm>
+
+
+   
+
+    <div>
+
+        @if (CarDetail != null)
+        {
+            <p>@CarDetail</p>
+        }
+
+
+    </div>
+
+
+</div>

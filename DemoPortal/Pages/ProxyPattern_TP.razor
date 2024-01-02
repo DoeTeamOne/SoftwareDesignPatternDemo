@@ -1,0 +1,65 @@
+﻿@page "/ProxyPattern_TP"
+@using ProxyPattern.Implementation;
+<h3>ProxyPattern_TP</h3>
+
+@code {
+    DocumentProxy _document;
+    ProtectedDocumentProxy _protectedDocumentProxy;
+    ProtectedDocumentProxy _protectedDocumentProxyTwo;
+    public bool Exception { get; set; } = false;
+    public string Message { get; set; }
+    public bool Exceptiontwo { get; set; } = false;
+    public string Messagetwo { get; set; }
+    protected override Task OnInitializedAsync()
+    {
+        _document = new DocumentProxy("MyDocument.pdf");
+        try
+        {
+            _protectedDocumentProxy = new ProtectedDocumentProxy("ProtectedDoc.Pdf", "Viewer");
+            _protectedDocumentProxyTwo = new ProtectedDocumentProxy("ProtectedDoc.Pdf", "Viewer");
+
+        }
+        catch(Exception ex)
+        {
+            Message = ex.Message;
+            StateHasChanged();
+        }
+
+
+        return base.OnInitializedAsync();
+    }
+}
+
+
+<div style="display:flex; justify-content:center">
+    <div style="border:dotted">
+        <p> proxy Document content </p>
+            <p>@_document.DisplayDocument()</p>  
+        
+    </div>
+
+    <div style="border:dotted">
+        <p>Chained Proxy Test</p>
+        @if (!Exception)
+        {
+        <p>@_protectedDocumentProxy.DisplayDocument()</p>
+        }
+        else
+        {
+            <p> @Message</p>
+        }
+
+    </div>
+    <div style="border:dotted">
+        <p>Chained Proxy Test for None Viewer User</p>
+        @if (!Exceptiontwo)
+        {
+            <p>@_protectedDocumentProxyTwo.DisplayDocument()</p>
+        }
+        else
+        {
+            <p> @Messagetwo</p>
+        }
+
+    </div>
+</div>

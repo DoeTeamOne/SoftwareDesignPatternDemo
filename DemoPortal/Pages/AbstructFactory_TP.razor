@@ -1,0 +1,72 @@
+﻿@page "/FactoryMethod_TP"
+@inject IShoppingCartClient shopingcartclient
+@code{
+
+
+    decimal payAmount = 0;
+    puchaseInfo _puchaseInfo = new puchaseInfo();
+    protected override Task OnInitializedAsync()
+    {
+
+
+        
+        return base.OnInitializedAsync();
+    }
+
+    public class puchaseInfo
+    {
+        public string cusromerID { get; set; }
+        public string CountryISO2 { get; set; }
+        public int TotalAmont { get; set; }
+        public decimal payAmount { get; set; }
+    }
+    private void Submit()
+    {
+
+        _puchaseInfo.cusromerID = Guid.NewGuid().ToString();
+        switch (_puchaseInfo.CountryISO2)
+        {
+            case "ES":
+                var spainshoppingcartfactory = new SpainShoppingCartPurchaseFactory();
+                var shoppingcartforspain = new ShoppingCartClient(spainshoppingcartfactory);
+                shoppingcartforspain.SetOrderCost(_puchaseInfo.TotalAmont);
+                _puchaseInfo.payAmount = shoppingcartforspain.CalculateCost();
+                break;
+            case "ET":
+                var EthshippingCartfactory = new EthShoppingCartPurchaseFactory();
+                var shoppingcartforEth = new ShoppingCartClient(EthshippingCartfactory);
+                shoppingcartforEth.SetOrderCost(_puchaseInfo.TotalAmont);
+                _puchaseInfo.payAmount = shoppingcartforEth.CalculateCost();
+                break;
+
+        }
+    }
+}
+
+<div class="text-center">
+<EditForm Model="@_puchaseInfo" OnValidSubmit="@Submit">
+    <InputSelect @bind-Value ="_puchaseInfo.CountryISO2">
+        <option value=""></option>
+        <option value="ES">ES</option>
+        <option value="ET">ET</option>
+
+    </InputSelect>
+    <InputNumber @bind-Value="_puchaseInfo.TotalAmont"></InputNumber>
+    <button type="submit">Submit</button>
+</EditForm>
+
+
+    <h1 class="display-4" style="padding-inline-start:60px">Discount Detail </h1>
+
+    <div>
+        <p>CustomerID :  @_puchaseInfo.cusromerID</p>
+        <p>Country :  @_puchaseInfo.CountryISO2</p>
+        <p>Total Amount :  @_puchaseInfo.TotalAmont</p>
+        <p>Discount :  @(@_puchaseInfo.TotalAmont - @_puchaseInfo.payAmount)</p>
+        <p>Pay Amount : @_puchaseInfo.payAmount</p>
+
+
+    </div>
+
+
+</div>

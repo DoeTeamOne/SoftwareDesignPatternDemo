@@ -1,0 +1,46 @@
+﻿@page "/BridgePattern_TP"
+@using global::BridgePattern.Implimentation;
+
+
+<h3>BridgePattern</h3>
+
+@code {
+    MeatBasedMenu meatmenu;
+    VeganMenu veganmenu;
+    protected override Task OnInitializedAsync()
+    {
+        var  nocupon = new NoCupon();
+        var oneCupon = new OneEruoCupon();
+        var twoCupon = new TwoEruoCupon();
+
+         meatmenu = new MeatBasedMenu(oneCupon);
+
+        veganmenu = new VeganMenu(twoCupon);
+
+        return base.OnInitializedAsync();
+    }
+
+}
+
+<div style="display:flex">
+@if(meatmenu!=null)
+{
+<div>
+    <p>Meat Base Menu Cupon Test</p>
+    <div>
+        <p>@meatmenu._cupon</p>
+        <p>@meatmenu.CalculatePrice()</p>
+    </div>
+</div>
+}
+    @if (veganmenu != null)
+    {
+        <div style="padding:5px">
+            <p>Vegan Menu Cupon Test</p>
+            <div>
+                <p>@veganmenu._cupon</p>
+                <p>@veganmenu.CalculatePrice()</p>
+            </div>
+        </div>
+    }
+</div>

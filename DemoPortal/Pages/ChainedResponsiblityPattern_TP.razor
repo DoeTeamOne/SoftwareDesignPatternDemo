@@ -1,0 +1,32 @@
+﻿@page "/ChainedResponsiblityPattern_TP"
+@using System.ComponentModel.DataAnnotations;
+<h3>ChainedResponsiblityPattern_TP</h3>
+
+@code
+{
+    protected override Task OnInitializedAsync()
+    {
+        var validDocument = new Document("the Book Of Daya", DateTime.UtcNow, true, true);
+        var invalidDocument = new Document("Abuchu CookBook", DateTime.UtcNow, false, true);
+
+        var documentHandlerChain = new DocumentTitleHandler();
+        documentHandlerChain.SetSuccessor(new DocumentLastModifiedHandler())
+                            .SetSuccessor(new DocumentApprovedByLitigationHandler())
+                            .SetSuccessor(new DocumentApprovedByManagmentHandler());
+
+        try
+        {
+            // validate the first document
+            documentHandlerChain.Handle(validDocument);
+            Console.WriteLine($"{nameof(validDocument)} : is Valid");
+            // lets validate the second document
+            documentHandlerChain.Handle(invalidDocument);
+            Console.WriteLine($"{nameof(invalidDocument)} : is Valid");
+        }
+        catch(ValidationException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+        return base.OnInitializedAsync();
+    }
+}

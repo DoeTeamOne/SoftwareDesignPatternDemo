@@ -1,0 +1,27 @@
+﻿@page "/VisiterPattern_TP"
+
+@code {
+    protected override Task OnInitializedAsync()
+    {
+        Container _container = new Container();
+        _container.Customers.Add(new VisiterPattern.Implementation.Customer("Karl", 200));
+        _container.Customers.Add(new VisiterPattern.Implementation.Customer("Sara", 1000));
+        _container.Customers.Add(new VisiterPattern.Implementation.Customer("Sam", 1500));
+
+        //
+        _container.Employees.Add(new VisiterPattern.Implementation.Employee("Tom",15));
+        _container.Employees.Add(new VisiterPattern.Implementation.Employee("Dan", 10));
+
+
+        //create visitor
+        DiscountVisiter discountVisiter = new DiscountVisiter();
+
+        // pass discount visitor to container
+        _container.Accept(discountVisiter);
+
+        Console.WriteLine($"Total Discount: {discountVisiter.TotalDiscountGven}");
+
+        return base.OnInitializedAsync();
+    }
+
+}

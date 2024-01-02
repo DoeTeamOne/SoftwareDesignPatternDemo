@@ -1,0 +1,26 @@
+﻿@page "/ObserverPattern_TP"
+
+<h3>ObserverPattern_TP</h3>
+
+@code {
+    protected override Task OnInitializedAsync()
+    {
+        // Observers
+        TicketStockServices ticketStockServices = new();
+        TicketResalerServices ticketResalerServices = new();
+
+        // Subjuct
+        ObserverPattern.Implementation.OrderServices  orderServices = new();
+
+        // subscribe Observers
+        orderServices.AddObserver(ticketStockServices);
+        orderServices.AddObserver(ticketResalerServices);
+
+        // Notify 
+
+        orderServices.CompleteTicketSale(1,2);
+
+    return base.OnInitializedAsync();
+    }
+
+}

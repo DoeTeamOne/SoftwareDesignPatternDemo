@@ -1,0 +1,74 @@
+﻿@page "/DecoratorPatern_TP"
+@using DecoretorPattern.Implementation;
+<h3>DecoratorPatern</h3>
+
+@code {
+    public string cloudmessageServiceLog { get; set; }
+    public string onpremServiceMesageLog { get; set; }
+    public string statisticsDecoratorLog { get; set; }
+    List<string> SendMessages { get; set; }
+    protected override Task OnInitializedAsync()
+    {
+        //*************************************** Cloud Mail Service Test/
+        var cloudservice = new CloudMailService();
+        cloudservice.SendMail("Hi There");
+        cloudmessageServiceLog = cloudservice.LogInfo();
+
+        //*************************************** OnPremises Mail Service Test/
+        var onpremisesMailService = new OnPremiseMailService();
+        onpremisesMailService.SendMail("Hi There ");
+        onpremServiceMesageLog = onpremisesMailService.LogInfo();
+
+
+        //**************************************** lets Add New Behavior Lets Decorate CloudService  with StatisticsDecorator /
+        var statisticsDecorator = new StatisticsDecorator(cloudservice);
+        statisticsDecorator.SendMail("Hi There ");
+        statisticsDecoratorLog = statisticsDecorator.lognfo;
+
+
+        //**************************************** lets Add New Behavior  Lets Decorate onpremises Service with MessageDaabase Decorator /
+
+        var messageDatabaseDecorator = new MessageDataBaseDecorator(onpremisesMailService);
+        messageDatabaseDecorator.SendMail("Hi Lisa");
+        messageDatabaseDecorator.SendMail("Hello Jhone");
+        SendMessages = messageDatabaseDecorator.sentMessages;
+
+        return base.OnInitializedAsync();
+    }
+
+}
+
+<div style="display:block">
+    <div style="display:flex; margin:40px">
+        <div style="padding:10px; border:dashed;margin:20px ">
+           <p style="color:darkorchid">Cloud Message Serevice Result </p>
+           <p>@cloudmessageServiceLog</p>
+        </div>
+
+        <div style="padding:10px; border:dashed;margin:20px">
+            <p style ="color:darkblue">OnPremises Message Serevice Result </p>
+            <p>@onpremServiceMesageLog</p>
+        </div>
+    </div>
+
+    <div style="display:flex; margin:40px">
+        <div style="padding:10px; border:dashed;margin:20px">
+            <p style ="color:chartreuse">Statistics Decorator  Result </p>
+            <p>@statisticsDecoratorLog</p>
+        </div>
+
+        <div style="padding:10px; border:dashed;margin:20px">
+            <p style ="color:deepskyblue">MessageDaabase Decorator Result </p>
+            <p>Sent Messages</p>
+            @if (SendMessages != null)
+            {
+                foreach(var message in SendMessages)
+                {
+                    <p>@message</p>
+                }
+                
+            }
+        </div>
+    </div>
+
+</div>

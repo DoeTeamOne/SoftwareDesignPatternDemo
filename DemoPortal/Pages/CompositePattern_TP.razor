@@ -1,0 +1,83 @@
+﻿@page "/CompositePattern_TP"
+
+<h3>CompositePattern</h3>
+
+@code {
+    public long rootsize { get; set; }
+    public long topLevelFileSize { get; set; }
+    public long toplevelDirectoryOneSize { get; set; }
+    public long toplevelDirectoryTwoSize { get; set; }
+    public long sublevelfileOneSize { get; set; }
+    public long sublevelfiletwoSize { get; set; }
+
+    protected override Task OnInitializedAsync()
+    {
+        var root = new CompositePattern.Implementation.Directory("root", 0);
+        var topLevelFile = new CompositePattern.Implementation.File("toplevel.txt", 100);
+        var toplevelDirectoryOne = new CompositePattern.Implementation.Directory("TopLevelDirecoryOne", 4);
+        var toplevelDirectoryTwo = new CompositePattern.Implementation.Directory("TopLevelDirecoryTwo", 4);
+
+        //  Add files and Directory To The Root 
+
+        root.Add(topLevelFile);
+        root.Add(toplevelDirectoryOne);
+        root.Add(toplevelDirectoryTwo);
+
+        // Create Sub level files
+        var sublevelfileOne = new CompositePattern.Implementation.File("sublevel.txt", 200);
+        var sublevelfiletwo = new CompositePattern.Implementation.File("sublevel.txt", 150);
+
+        // Add Them in to TopLevelDirectoryOne 
+        toplevelDirectoryOne.Add(sublevelfileOne);
+        toplevelDirectoryOne.Add(sublevelfiletwo);
+
+        // Lets Get the size of each Directory and the size of  File inside them
+        rootsize = root.GetSize();
+        topLevelFileSize = topLevelFile.GetSize();
+        toplevelDirectoryOneSize = toplevelDirectoryOne.GetSize();
+        toplevelDirectoryTwoSize = toplevelDirectoryTwo.GetSize();
+        sublevelfileOneSize = sublevelfileOne.GetSize();
+        sublevelfiletwoSize = sublevelfiletwo.GetSize();
+
+
+       
+
+
+        return base.OnInitializedAsync();
+    }
+   
+}
+
+        <div>
+    <div style ="padding:40px;border:dotted">
+                <p>Root Size </p>
+                <p>@rootsize MB</p>
+            </div>
+            <div style="display:flex; padding:40px;margin:10px">
+
+        <div style="padding:40px;border:dotted">
+                    <p>Top Level File Size</p>
+                    <p>@topLevelFileSize MB</p>
+                </div>
+        <div style="padding:40px;border:dotted">
+            <p>Top Level Directory One Size</p>
+            <p>@toplevelDirectoryOneSize MB</p>
+        </div>
+        <div style="padding:40px;border:dotted">
+            <p>Top Level Directory Two Size</p>
+            <p>@toplevelDirectoryTwoSize MB</p>
+        </div>
+
+            </div>
+    <div style="display:flex;padding:40px;margin:10px">
+        <div style="padding:40px;border:dotted">
+                    <p>sub Level File One Size</p>
+                    <p>@sublevelfileOneSize MB </p>
+                </div>
+        <div style="padding:40px;border:dotted">
+            <p>sub Level File Two Size</p>
+            <p>@sublevelfiletwoSize MB </p>
+        </div>
+            </div>
+           
+        </div>

@@ -1,0 +1,43 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.16" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AbstructFactoryPattern\AbstructFactoryPattern.csproj" />
+    <ProjectReference Include="..\AdapterPattern\AdapterPattern.csproj" />
+    <ProjectReference Include="..\BridgePattern\BridgePattern.csproj" />
+    <ProjectReference Include="..\BuilderPattern\BuilderPattern.csproj" />
+    <ProjectReference Include="..\ChainOfResponsiblityPattern\ChainOfResponsiblityPattern.csproj" />
+    <ProjectReference Include="..\CommandPattern\CommandPattern.csproj" />
+    <ProjectReference Include="..\CompositePattern\CompositePattern.csproj" />
+    <ProjectReference Include="..\DecoretorPattern\DecoretorPattern.csproj" />
+    <ProjectReference Include="..\FacadePattern\FacadePattern.csproj" />
+    <ProjectReference Include="..\FactoryMethod_Patern\FactoryMethod_Patern.csproj" />
+    <ProjectReference Include="..\FlyWeightPattern\FlyWeightPattern.csproj" />
+    <ProjectReference Include="..\InterPreterPattern\InterPreterPattern.csproj" />
+    <ProjectReference Include="..\IteratorPattern\IteratorPattern.csproj" />
+    <ProjectReference Include="..\MediatorPattern\MediatorPattern.csproj" />
+    <ProjectReference Include="..\MomentoPattern\MomentoPattern.csproj" />
+    <ProjectReference Include="..\ObserverPattern\ObserverPattern.csproj" />
+    <ProjectReference Include="..\ProtoTypePattern\ProtoTypePattern.csproj" />
+    <ProjectReference Include="..\ProxyPattern\ProxyPattern.csproj" />
+    <ProjectReference Include="..\SingletonPattern\SingletonPattern.csproj" />
+    <ProjectReference Include="..\StatePattern\StatePattern.csproj" />
+    <ProjectReference Include="..\StrategyPattern\StrategyPattern.csproj" />
+    <ProjectReference Include="..\TemplatePattern\TemplatePattern.csproj" />
+    <ProjectReference Include="..\VisiterPattern\VisiterPattern.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Data\" />
+  </ItemGroup>
+
+</Project>

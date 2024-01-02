@@ -1,0 +1,27 @@
+﻿@page "/AdopterPattern_TP"
+
+@inject IcityAdopter cityAdopter
+<h3>AdopterPattern_TP</h3>
+
+@code {
+    City _city;
+    protected override Task OnInitializedAsync()
+    {
+        _city = cityAdopter.GetCity();
+        return base.OnInitializedAsync();
+    }
+}
+
+
+    @if(_city!= null)
+    {
+    <div>
+        <p> Object Adopter Example </p>
+        <div>
+            <p>FullName : @_city.FullName</p>
+            <p>Inhubitats : @_city.Inhubitants</p>
+        </div>
+    </div>
+        
+    }
+

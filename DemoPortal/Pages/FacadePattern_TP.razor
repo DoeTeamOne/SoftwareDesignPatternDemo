@@ -1,0 +1,40 @@
+﻿@page "/FacadePattern_TP"
+<h3>FacadePattern_TP</h3>
+
+@code {
+    DiscountFacade discountFacade = new DiscountFacade();
+    public double DiscountPercentage { get; set; }
+    public int CustomeID { get; set; }
+    public bool Calculated { get; set; } = false;
+    protected override Task OnInitializedAsync()
+    {
+        return base.OnInitializedAsync();
+    }
+
+    void CalculateDiscount()
+    {
+        DiscountPercentage = discountFacade.CalculateDiscountPercentage(CustomeID);
+        Calculated = true;
+        StateHasChanged();
+    }
+
+}
+
+<div style="display:block; justify-content:center">
+    <div style="display:flex">
+    <div style="display:flex">
+        <p>CustomerID</p>
+        <input type="number" @bind-value="CustomeID" />
+    </div>
+    @if (Calculated)
+    {
+        <div>
+            <p> Customer ID  : @CustomeID</p>
+            <p>Discount % : <b style="color:lawngreen">@DiscountPercentage</b> </p>
+        </div>
+    }
+    </div>
+    <div>
+        <button @onclick="CalculateDiscount">CalculateDiscount</button>
+    </div>
+</div>

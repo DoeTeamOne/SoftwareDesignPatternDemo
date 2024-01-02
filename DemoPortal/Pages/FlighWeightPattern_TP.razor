@@ -1,0 +1,79 @@
+﻿@page "/FlighWeightPattern_TP"
+<h3>FlighWeightPattern</h3>
+
+@code {
+
+    public string firisttime { get; set; }
+    public bool reused { get; set; }
+    public string secondtime { get; set; }
+    public bool reused2 { get; set; }
+    List<CharactorData> CharInfo = new List<CharactorData>();
+    protected override void OnInitialized()
+    {
+
+
+        var abunchofCharactor = "ababa";
+        var charactorFactory = new CharactorFactory();
+        // var charactorObject = charactorFactory.GetCharacter(abunchofCharactor[0]);
+        //  firisttime = charactorObject?.Draw("TimesNewRoman", 15);
+        // reused = charactorFactory.IsReused;
+        int indexcounter = 0;
+        foreach (var ch in  abunchofCharactor.ToArray())
+        {
+            var charactorObject = charactorFactory.GetCharacter(ch);
+            var charData = new CharactorData();
+
+            switch (indexcounter)
+            {
+                case 1:
+                    charData.Charactor = charactorObject.Draw("Arial", 15);
+                    break;
+                case 3:
+                    charData.Charactor = charactorObject.Draw("TimesNewRoman", 17);
+                    break;
+                case 4:
+                    charData.Charactor = charactorObject.Draw("MonotypeCorsiva", 14);
+                    break;
+                default:
+                    charData.Charactor = charactorObject.Draw("Sanserif", 12);
+                    break;
+
+            }
+
+            charData.ISReused = charactorFactory.IsReused;
+            CharInfo.Add(charData);
+            indexcounter++;
+        }
+
+   
+        base.OnInitialized();
+    }
+
+    public class CharactorData
+    {
+        public string Charactor { get; set; }
+        public bool ISReused { get; set; }
+    }
+}
+
+
+           <div style="display:flex;justify-content:center">
+               <div>
+                   @foreach(var charonject in CharInfo)
+        {
+            <div style="padding:12px;border:dotted; margin:2px">
+            <p>@charonject.Charactor</p>
+                @if (@charonject.ISReused)
+                {
+                    <p>ReUsed </p>
+                }
+                else
+                {
+                    <p>Created </p>
+                }
+            </div>
+        }
+
+               </div>
+
+           </div>

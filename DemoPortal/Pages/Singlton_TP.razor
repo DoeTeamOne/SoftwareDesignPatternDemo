@@ -1,0 +1,43 @@
+﻿@page "/Singletone_TP"
+@using SingletonPattern.Implementation;
+
+@code {
+    public bool isSame { get; set; } = false;
+    public string  MessageOne { get; set; }
+    public string MessageTwo { get; set; }
+    protected override Task OnInitializedAsync()
+    {
+        var instanceone = Logger.Instance;
+        var instanceTwo = Logger.Instance;
+        MessageOne =instanceone.Log($"Message from :{instanceone} ");
+        MessageTwo = instanceTwo.Log($"Message from :{instanceTwo} ");
+        if (instanceone == instanceTwo && instanceTwo == Logger.Instance)
+        {
+            isSame = true;
+        }
+
+        return base.OnInitializedAsync();
+    }
+
+    
+
+
+
+}
+
+<div class="text-center">
+   
+
+    <div>
+
+        @if (isSame)
+        {
+            <p>One : @MessageOne</p>
+            <p>Two : @MessageTwo</p>
+        }
+
+
+    </div>
+
+
+</div>
